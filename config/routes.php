@@ -37,7 +37,9 @@ return [
 
     Route::post('/admin/categories/destroy', [CategoryController::class, 'destroy']),
 
-    Route::get('/admin/videos/add', [VideoController::class, 'add'], [AuthMiddleware::class]),
+    //Route::get('/admin/videos/add', [VideoController::class, 'add'], [AuthMiddleware::class]),
+
+    Route::get('/admin/videos/add', [VideoController::class, 'create']),
 
     Route::post('/admin/videos/add', [VideoController::class, 'store']),
 
