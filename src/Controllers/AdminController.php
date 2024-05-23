@@ -4,20 +4,19 @@ namespace App\Controllers;
 
 use App\Kernel\Controller\BaseController;
 use App\Services\CategoryService;
+use App\Services\VideoService;
 
 class AdminController extends BaseController
 {
     public function index()
     {
-        //$categories = $this->db()->get('categories');
         $categories = new CategoryService($this->db());
 
-        $res = $categories->all();
+        $movies = new VideoService($this->db());
 
-        //dd($res);
-        
         $this->view('admin/index', [
-            'categories' => $res,
+            'categories' => $categories->all(),
+            'movies'     => $movies->all(),
         ]);
     }
 }

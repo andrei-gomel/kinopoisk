@@ -43,6 +43,12 @@ return [
 
     Route::post('/admin/videos/add', [VideoController::class, 'store']),
 
+    Route::post('/admin/videos/destroy', [VideoController::class, 'destroy']),
+
+    Route::get('/admin/videos/update', [VideoController::class, 'edit']),
+
+    Route::post('/admin/videos/update', [VideoController::class, 'update']),
+
     Route::get('/test', function () {
         echo 'Test';
     }),

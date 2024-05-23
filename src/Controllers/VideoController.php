@@ -67,6 +67,50 @@ class VideoController extends BaseController
         $this->redirect('/admin');
     }
 
+    public function edit()
+    {
+        $categories = new CategoryService($this->db());
+        
+        $this->view('admin/videos/update', [
+            'movie' => $this->service()->find($this->request()->input('id')),
+            'categories' => $categories->all(),
+        ]);
+    }
+
+    public function update()
+    {
+        $validation = $this->request()->validate([
+            'name' => ['required', 'min:5', 'max:100'],
+            'description' => ['required', 'min:5', 'max:255'],
+            'category' => ['required',]
+        ]);
+
+        if (!$validation) {
+            foreach ($this->request()->errors() as $field => $errors) {
+                $this->session()->set($field, $errors);
+            }
+
+            $this->redirect("/admin/videos/update?id={$this->request()->input('id')}");
+        }
+
+        $this->service()->update(
+            $this->request()->input('id'),
+            $this->request()->input('name'),
+            $this->request()->input('description'),
+            $this->request()->file('image'),
+            $this->request()->input('category'),
+        );
+
+        $this->redirect('/admin');
+    }
+
+    public function destroy()
+    {
+        $this->service()->destroy($this->request()->input('id'));
+
+        $this->redirect('/admin');
+    }
+
     private function service(): VideoService
     {
         if (!isset($this->service))
